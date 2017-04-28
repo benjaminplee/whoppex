@@ -1,4 +1,4 @@
 # Whoppex
 
-**TODO: Add description**
+Erlixir based load generation tool
 
