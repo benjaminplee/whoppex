@@ -1,18 +1,8 @@
 defmodule WhoppexAgents do
-  @moduledoc """
-  Documentation for WhoppexAgents.
-  """
+	use Application
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> WhoppexAgents.hello
-      :world
-
-  """
-  def hello do
-    :world
-  end
+	def start(_type, args) do
+		WhoppexAggents.Supervisor.start_link
+	end
 end
+
