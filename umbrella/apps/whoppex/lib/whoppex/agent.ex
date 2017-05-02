@@ -1,4 +1,4 @@
-defmodule Whoppex.AgentWorker do
+defmodule Whoppex.Agent do
 
   # Behavior for callback modules
   @callback execute(arg :: any) :: any
