@@ -1,7 +1,7 @@
-defmodule WA.Supervisor do
+defmodule Whoppex.Supervisor do
   use Supervisor
 
-  @name WA.Supervisor
+  @name Whoppex.Supervisor
 
   def start_link do
     Supervisor.start_link(__MODULE__, :ok, name: @name)
@@ -12,7 +12,7 @@ defmodule WA.Supervisor do
   end
 
   def init(:ok) do
-    children = [ worker(WA.AgentWorker, [], restart: :temporary) ]
+    children = [ worker(Whoppex.AgentWorker, [], restart: :temporary) ]
     supervise(children, strategy: :simple_one_for_one)
   end
 end

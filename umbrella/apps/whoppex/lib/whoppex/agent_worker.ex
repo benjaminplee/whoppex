@@ -1,4 +1,8 @@
-defmodule WA.AgentWorker do
+defmodule Whoppex.AgentWorker do
+
+  # Behavior for callback modules
+  @callback execute(arg :: any) :: any
+
   use GenServer
 
   def start_link(agentModule) do

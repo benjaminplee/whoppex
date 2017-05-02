@@ -1,4 +1,0 @@
-# WhoppexAgents
-
-Load generation agents
-

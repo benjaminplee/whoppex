@@ -1,6 +1,6 @@
-defmodule WhoppexAgentsTest do
+defmodule WhoppexTest do
   use ExUnit.Case
-  doctest WA.Application
+  doctest Whoppex.Application
 
   test "the truth" do
     assert 1 + 1 == 2

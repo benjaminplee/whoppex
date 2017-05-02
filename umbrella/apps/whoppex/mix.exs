@@ -1,8 +1,8 @@
-defmodule WhoppexAgents.Mixfile do
+defmodule Whoppex.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :whoppex_agents,
+    [app: :whoppex,
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
@@ -20,7 +20,7 @@ defmodule WhoppexAgents.Mixfile do
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
     [extra_applications: [:logger],
-     mod: {WA.Application, []}]
+     mod: {Whoppex.Application, []}]
   end
 
   # Dependencies can be Hex packages:

@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :whoppex_agents, key: :value
+#     config :whoppex, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:whoppex_agents, :key)
+#     Application.get_env(:whoppex, :key)
 #
 # Or configure a 3rd-party app:
 #
