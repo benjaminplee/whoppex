@@ -1,8 +1,10 @@
 defmodule Sample.Agent do
   @behaviour Whoppex.Agent
+  require Logger
 
   def execute(state) do
-    IO.puts "Sample.Agent (#{self()}) reporting for duty"
+    self = inspect(self())
+    Logger.info "Sample.Agent (#{self}) reporting for duty"
     state
   end
 end
