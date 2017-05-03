@@ -19,8 +19,11 @@ defmodule Sample.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger],
-     mod: {Sample.Application, []}]
+    [
+      applications: [:httpoison],
+      extra_applications: [:logger],
+      mod: {Sample.Application, []}
+    ]
   end
 
   # Dependencies can be Hex packages:
@@ -37,6 +40,9 @@ defmodule Sample.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:whoppex, in_umbrella: true}]
+    [
+      {:whoppex, in_umbrella: true},
+      {:httpoison, "~> 0.11.1"}
+    ]
   end
 end
