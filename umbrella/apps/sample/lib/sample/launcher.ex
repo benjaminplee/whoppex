@@ -18,9 +18,8 @@ defmodule Sample.Launcher do
   end
 
   def handle_cast(:launch, state) do
-    Whoppex.Supervisor.start_agent(Sample.Agent)
+    Whoppex.Supervisor.start_agent(Sample.Agent, :no_state)
     {:noreply, state}
   end
-
 
 end
