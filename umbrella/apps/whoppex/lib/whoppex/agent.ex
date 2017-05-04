@@ -27,6 +27,18 @@ defmodule Whoppex.Agent do
     {:noreply, state}
   end
 
+  def handle_cast(:next, {agentModule, [{:repeat, next_step, 1} | rest_of_the_plan], agent_state}) do
+    new_agent_state = apply(agentModule, next_step, [agent_state])
+    GenServer.cast(self(), :next)
+    {:noreply, {agentModule, rest_of_the_plan, new_agent_state}}
+  end
+
+  def handle_cast(:next, {agentModule, [{:repeat, next_step, num} | rest_of_the_plan], agent_state}) do
+    new_agent_state = apply(agentModule, next_step, [agent_state])
+    GenServer.cast(self(), :next)
+    {:noreply, {agentModule, [{:repeat, next_step, num - 1} | rest_of_the_plan], new_agent_state}}
+  end
+
   def handle_cast(:next, {agentModule, [next_step | rest_of_the_plan], agent_state}) do
     new_agent_state = apply(agentModule, next_step, [agent_state])
     GenServer.cast(self(), :next)
