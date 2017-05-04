@@ -6,20 +6,20 @@ defmodule Whoppex.Agent do
   use GenServer
   require Logger
 
-  def start_link(agentModule, agent_state) do
-    GenServer.start_link(__MODULE__, {agentModule, agent_state}, [])
+  def start_link(agent_module, agent_state) do
+    GenServer.start_link(__MODULE__, {agent_module, agent_state}, [])
   end
 
-  def init({agentModule, agent_state}) do
+  def init({agent_module, agent_state}) do
     Logger.info "Starting Whoppex Agent Worker"
     GenServer.cast(self(), :start)
-    {:ok, {agentModule, [], agent_state}}
+    {:ok, {agent_module, [], agent_state}}
   end
 
-  def handle_cast(:start, {agentModule, [], agent_state}) do
-    plan = agentModule.create_plan(agent_state)
+  def handle_cast(:start, {agent_module, [], agent_state}) do
+    plan = agent_module.create_plan(agent_state)
     GenServer.cast(self(), :next)
-    {:noreply, {agentModule, plan, agent_state}}
+    {:noreply, {agent_module, plan, agent_state}}
   end
 
   def handle_cast(:next, {_, [], _} = state) do
@@ -27,11 +27,11 @@ defmodule Whoppex.Agent do
     {:noreply, state}
   end
 
-  def handle_cast(:next, {agentModule, plan, agent_state}) do
+  def handle_cast(:next, {agent_module, plan, agent_state}) do
     {next_step, rest_of_the_plan} = parse_plan(plan)
-    new_agent_state = apply(agentModule, next_step, [agent_state])
+    new_agent_state = apply(agent_module, next_step, [agent_state])
     GenServer.cast(self(), :next)
-    {:noreply, {agentModule, rest_of_the_plan, new_agent_state}}
+    {:noreply, {agent_module, rest_of_the_plan, new_agent_state}}
   end
 
   defp parse_plan([{:repeat, next_step, 1} | rest_of_the_plan]) do

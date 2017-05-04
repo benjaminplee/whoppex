@@ -7,8 +7,8 @@ defmodule Whoppex.Supervisor do
     Supervisor.start_link(__MODULE__, :ok, name: @name)
   end
 
-  def start_agent(agentModule, agent_state) do
-    Supervisor.start_child(@name, [agentModule, agent_state])
+  def start_agent(agent_module, agent_state) do
+    Supervisor.start_child(@name, [agent_module, agent_state])
   end
 
   def init(:ok) do
