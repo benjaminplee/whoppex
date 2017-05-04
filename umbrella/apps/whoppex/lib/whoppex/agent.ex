@@ -27,22 +27,23 @@ defmodule Whoppex.Agent do
     {:noreply, state}
   end
 
-  def handle_cast(:next, {agentModule, [{:repeat, next_step, 1} | rest_of_the_plan], agent_state}) do
+  def handle_cast(:next, {agentModule, plan, agent_state}) do
+    {next_step, rest_of_the_plan} = parse_plan(plan)
     new_agent_state = apply(agentModule, next_step, [agent_state])
     GenServer.cast(self(), :next)
     {:noreply, {agentModule, rest_of_the_plan, new_agent_state}}
   end
 
-  def handle_cast(:next, {agentModule, [{:repeat, next_step, num} | rest_of_the_plan], agent_state}) do
-    new_agent_state = apply(agentModule, next_step, [agent_state])
-    GenServer.cast(self(), :next)
-    {:noreply, {agentModule, [{:repeat, next_step, num - 1} | rest_of_the_plan], new_agent_state}}
+  defp parse_plan([{:repeat, next_step, 1} | rest_of_the_plan]) do
+    {next_step, rest_of_the_plan}
   end
 
-  def handle_cast(:next, {agentModule, [next_step | rest_of_the_plan], agent_state}) do
-    new_agent_state = apply(agentModule, next_step, [agent_state])
-    GenServer.cast(self(), :next)
-    {:noreply, {agentModule, rest_of_the_plan, new_agent_state}}
+  defp parse_plan([{:repeat, next_step, n} | rest_of_the_plan]) do
+    {next_step, [{:repeat, next_step, n - 1} | rest_of_the_plan]}
+  end
+
+  defp parse_plan([next_step | rest_of_the_plan]) do
+    {next_step, rest_of_the_plan}
   end
 
 end
