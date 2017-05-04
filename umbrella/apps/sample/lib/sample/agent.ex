@@ -1,12 +1,22 @@
 defmodule Sample.Agent do
-  @behaviour Whoppex.Agent
+  use Whoppex.Agent
   require Logger
 
   @sample_url "http://httpbin.org/ip"
 
   def create_plan(_state) do
     Logger.info log("Reporting For Duty")
-    [:get_ip, {:repeat, :get_ip, 10}]
+    [:say_hello, repeat(:get_ip, 10), :say_goodbye]
+  end
+
+  def say_hello(state) do
+    Logger.info log("hello world")
+    state
+  end
+
+  def say_goodbye(state) do
+    Logger.info log("bye bye")
+    state
   end
 
   def get_ip(state) do
