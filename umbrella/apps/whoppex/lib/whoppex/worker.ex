@@ -30,17 +30,21 @@ defmodule Whoppex.Worker do
     {:noreply, {agent_module, rest_of_the_plan, new_agent_state}}
   end
 
-  defp parse_plan([{:repeat, next_step, 1} | rest_of_the_plan]) do
-    {next_step, rest_of_the_plan}
+  defp parse_plan([{:repeat, _next_step, 0} | rest_of_the_plan]) do
+    {:noop, rest_of_the_plan}
   end
 
   defp parse_plan([{:repeat, next_step, n} | rest_of_the_plan]) do
-    {next_step, [{:repeat, next_step, n - 1} | rest_of_the_plan]}
+    {:noop, [next_step | [{:repeat, next_step, n - 1} | rest_of_the_plan]]}
   end
 
   defp parse_plan([{:pause, min, max} | rest_of_the_plan]) do
     pause_proc(min, max)
     {:noop, rest_of_the_plan}
+  end
+
+  defp parse_plan([steps | rest_of_the_plan]) when is_list(steps) do
+    {:noop, steps ++ rest_of_the_plan}
   end
 
   defp parse_plan([next_step | rest_of_the_plan]) do

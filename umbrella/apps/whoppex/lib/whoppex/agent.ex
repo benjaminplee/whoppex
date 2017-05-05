@@ -6,13 +6,12 @@ defmodule Whoppex.Agent do
   defmacro __using__(_) do
     quote location: :keep do
       @behaviour Whoppex.Agent
-      @default_pause 1000
 
-      def repeat(function_name, times) do
-        {:repeat, function_name, times}
+      def repeat(plan, times \\ 2) do
+        {:repeat, plan, times}
       end
 
-      def pause(min \\ @default_pause, max \\ @default_pause) when min <= max do
+      def pause(min \\ 1000, max \\ 1000) when min <= max do
         {:pause, min, max}
       end
 
