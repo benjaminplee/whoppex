@@ -38,8 +38,8 @@ defmodule Whoppex.Worker do
     {:noop, [next_step | [{:repeat, next_step, n - 1} | rest_of_the_plan]]}
   end
 
-  defp parse_plan([{:pause, min, max} | rest_of_the_plan]) do
-    pause_proc(min, max)
+  defp parse_plan([{:pause, ms} | rest_of_the_plan]) do
+    Process.sleep(ms)
     {:noop, rest_of_the_plan}
   end
 
@@ -51,13 +51,5 @@ defmodule Whoppex.Worker do
     {next_step, rest_of_the_plan}
   end
 
-  defp pause_proc(min, min) do
-    Process.sleep(min)
-  end
-
-  defp pause_proc(min, max) do
-    time = :rand.uniform(max - min) + min
-    Process.sleep(time)
-  end
 end
 

@@ -6,14 +6,14 @@ defmodule Sample.Agent do
     Logger.info log("Reporting For Duty")
     [
       :say_hello,
-      pause(),
+      delay(),
       repeat(:get_ip),
-      pause(),
+      delay(2000),
       repeat([
         :get_teapot,
         pause()
       ], 3),
-      pause(2000, 4000),
+      delay(2000, 4000),
       :say_goodbye
     ]
   end

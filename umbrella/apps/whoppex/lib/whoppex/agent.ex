@@ -11,12 +11,24 @@ defmodule Whoppex.Agent do
         {:repeat, plan, times}
       end
 
-      def pause(min \\ 1000, max \\ 1000) when min <= max do
-        {:pause, min, max}
+      def delay(ms \\ 1000) do
+        {:pause, enforce_min_time(round(:rand.normal() * ms))}
+      end
+
+      def delay(min_ms, max_ms) when min_ms <= max_ms do
+        {:pause, enforce_min_time(:rand.uniform(max_ms - min_ms) + min_ms)}
+      end
+
+      def pause(ms \\ 1000) do
+        {:pause, enforce_min_time(ms)}
       end
 
       def noop(state) do
         state
+      end
+
+      defp enforce_min_time(ms) do
+        max(10, ms)
       end
 
       #defoverridable [init: 1]
