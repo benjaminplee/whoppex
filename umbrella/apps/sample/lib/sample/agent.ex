@@ -5,16 +5,16 @@ defmodule Sample.Agent do
   def create_plan(_state) do
     Logger.info log("Reporting For Duty")
     [
-      :say_hello,
-      delay(),
-      repeat(:get_ip),
-      delay(2000),
-      repeat([
+      :say_hello,         # execute function as step
+      delay(),            # use default delay with normal dist randomization
+      repeat(:get_ip),    # repeat specific step (function name atom) default times
+      delay(2000),        # use specific delay (in ms) with normal dist
+      repeat([            # repeat the sub-plan 3 times
         :get_teapot,
-        pause()
+        pause()           # wait for specific time (no random) using default
       ], 3),
-      delay(2000, 4000),
-      forever([
+      delay(2000, 4000),  # wait for between min and max ms
+      forever([           # loop forever on the passed in sub-plan
         :say_goodbye,
         delay()
       ])
