@@ -16,4 +16,5 @@ Erlixir based load generation tool
 - Easy distributed testing modes (launch agents round-robin or preset across nodes)
 	- relaunch agents on other nodes or redistribute based on load
 - ability to set "fixed" number of agents and restart on death or end of plan to maintain
-
+- document usage and consider how other people can use the base app, integrate with their own
+    elixir apps, or ideally use without having to build their own app (e.g. with .exs files)
