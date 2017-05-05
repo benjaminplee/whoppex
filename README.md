@@ -18,3 +18,5 @@ Erlixir based load generation tool
 - ability to set "fixed" number of agents and restart on death or end of plan to maintain
 - document usage and consider how other people can use the base app, integrate with their own
     elixir apps, or ideally use without having to build their own app (e.g. with .exs files)
+- full test coverage
+- passing ci build

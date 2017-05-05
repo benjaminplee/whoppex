@@ -6,7 +6,7 @@ defmodule Sample.Agent do
 
   def create_plan(_state) do
     Logger.info log("Reporting For Duty")
-    [:say_hello, repeat(:get_ip, 10), :say_goodbye]
+    [:say_hello, pause(), repeat(:get_ip, 10), pause(2000, 4000), :say_goodbye]
   end
 
   def say_hello(state) do
