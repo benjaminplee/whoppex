@@ -2,6 +2,12 @@
 
 Erlixir based load generation tool
 
+## Features
+
+- Clean separation of "what" from "how" in test plans and scenarios
+-- Plans can be arbitrary function names, "repeat", or "pause" elements
+-- Plans can be composed of sub lists
+
 ## To Do
 
 - Give easy "pause" configurable step ability
