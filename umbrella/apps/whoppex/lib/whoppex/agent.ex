@@ -7,6 +7,10 @@ defmodule Whoppex.Agent do
     quote location: :keep do
       @behaviour Whoppex.Agent
 
+      def forever(plan) do
+        {:forever, plan}
+      end
+
       def repeat(plan, times \\ 2) do
         {:repeat, plan, times}
       end

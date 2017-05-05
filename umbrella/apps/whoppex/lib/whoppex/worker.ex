@@ -30,6 +30,10 @@ defmodule Whoppex.Worker do
     {:noreply, {agent_module, rest_of_the_plan, new_agent_state}}
   end
 
+  defp parse_plan([{:forever, steps} | rest_of_the_plan] = plan) do
+    {:noop, [steps | plan]}
+  end
+
   defp parse_plan([{:repeat, _next_step, 0} | rest_of_the_plan]) do
     {:noop, rest_of_the_plan}
   end

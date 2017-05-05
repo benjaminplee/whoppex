@@ -14,7 +14,10 @@ defmodule Sample.Agent do
         pause()
       ], 3),
       delay(2000, 4000),
-      :say_goodbye
+      forever([
+        :say_goodbye,
+        delay()
+      ])
     ]
   end
 
