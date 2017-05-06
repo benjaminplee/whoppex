@@ -2,8 +2,8 @@ defmodule Whoppex.Worker do
   use GenServer
   require Logger
 
-  def start_link(agent_module, agent_state) do
-    GenServer.start_link(__MODULE__, {agent_module, agent_state}, [])
+  def start_link(agent_spec) do
+    GenServer.start_link(__MODULE__, agent_spec, [])
   end
 
   def init({agent_module, agent_state}) do
@@ -30,7 +30,7 @@ defmodule Whoppex.Worker do
     {:noreply, {agent_module, rest_of_the_plan, new_agent_state}}
   end
 
-  defp parse_plan([{:forever, steps} | rest_of_the_plan] = plan) do
+  defp parse_plan([{:forever, steps} | _rest_of_the_plan] = plan) do
     {:noop, [steps | plan]}
   end
 

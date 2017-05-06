@@ -7,17 +7,26 @@ defmodule Whoppex.Supervisor do
     Supervisor.start_link(__MODULE__, :ok, name: @name)
   end
 
-  def start_agent(agent_module, agent_state) do
-    start_agents(agent_module, agent_state, 1)
+  def start_agent_spec(agent_spec) do
+    start_agent_specs(agent_spec, 1)
   end
 
-  def start_agents(agent_module, agent_state, 0) do
+  def start_agent_specs(_agent_spec, 0) do
     :ok
   end
 
-  def start_agents(agent_module, agent_state, n) do
-    Supervisor.start_child(@name, [agent_module, agent_state])
-    start_agents(agent_module, agent_state, n - 1)
+  def start_agent_specs(agent_spec, n) do
+    Supervisor.start_child(@name, [agent_spec])
+    start_agent_specs(agent_spec, n - 1)
+  end
+
+  def start_agent_spec_list([]) do
+    :ok
+  end
+
+  def start_agent_spec_list([agent_spec | rest]) do
+    start_agent_spec(agent_spec)
+    start_agent_spec_list(rest)
   end
 
   def init(:ok) do

@@ -1,4 +1,4 @@
-defmodule Sample.Agent do
+defmodule Sample.HttpAgent do
   use Whoppex.Agent
   require Logger
 
