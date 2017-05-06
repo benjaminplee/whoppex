@@ -11,6 +11,7 @@ Erlixir based load generation tool
 		* repeat/forever
 		* delay/pause
 * Core is not protocol dependent
+* Ability to launch one agent, many agents, or list of agents
 * Agents may carry their own state along (e.g. identity, cookies, open socket)
 * Includes sample agent (sample app under umbrella) to demonstrate basic concepts
 
@@ -25,7 +26,6 @@ to do
 - Example of non-HTTP agents
 
 ### In Whoppex
-- Mechanism to easily create multiple agents with fewer calls and same or varied state/type
 - Mechanism for ramp up and down of agents
 - integration with statd/graphite/etc for event tracking and test visualization
 - Logging to track agent and test success, agent errors, status codes, etc
