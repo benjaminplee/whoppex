@@ -22,9 +22,11 @@ Erlixir based load generation tool
   * https://www.rabbitmq.com/install-debian.html
   * service rabbitmq-server stop
 	* sudo rabbitmq-plugins enable rabbitmq_management
+  * sudo rabbitmqctl add_user test test
+  * sudo rabbitmqctl set_user_tags test administrator
+  * sudo rabbitmqctl set_permissions -p / test ".*" ".*" ".*"
   * service rabbitmq-server start
-
-
+	* access via http://localhost:5672 with test:test
 
 to do
 
