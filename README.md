@@ -19,16 +19,11 @@ Erlixir based load generation tool
 
 ### Setup dependencies for sample app
 
-Install RabbitMQ on same machine as sample app
+Install MQTT Broker, e.g. Mosquitto, for testing
 
-    https://www.rabbitmq.com/install-debian.html
-    service rabbitmq-server stop
-	  sudo rabbitmq-plugins enable rabbitmq_management
-    sudo rabbitmqctl add_user test test
-    sudo rabbitmqctl set_user_tags test administrator
-    sudo rabbitmqctl set_permissions -p / test ".*" ".*" ".*"
-    service rabbitmq-server start
-	  access via http://localhost:5672 with test:test
+    sudo apt-get install mosquitto mosquitto-clients
+    service mosquitto start
+    mosquitto_sub -t "#" -v # Setup testing subscriber printing to console
 
 ### How to run sample app
 
