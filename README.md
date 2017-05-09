@@ -13,7 +13,7 @@ Erlixir based load generation tool
 * Core is not protocol dependent
 * Ability to launch one agent, many agents, or list of agents
 * Agents may carry their own state along (e.g. identity, cookies, open socket)
-* Includes sample agent (sample app under umbrella) to demonstrate basic concepts
+* Includes sample agent (sample app under umbrella) to demonstrate basic concepts (HTTP, Logging, and MQTT)
 
 ## Installing / How to Use
 
@@ -25,13 +25,18 @@ Install MQTT Broker, e.g. Mosquitto, for testing
     service mosquitto start
     mosquitto_sub -t "#" -v # Setup testing subscriber printing to console
 
+Send test msg (to verify setup)
+
+    mosquitto_pub -t "whoppex/sample" -m "hey"
+
 ### How to run sample app
 
 1. cd umbrella
-2. iex -S mix
-3. Sample.Launcher.launch(:logging | :http | :mqtt) # OR
-4. Sample.Launcher.launch_many(:logging | :http | :mqtt ) # OR
-5. Sample.Launcher.launch_mix()
+2. mix deps.get
+3. iex -S mix
+4. Sample.Launcher.launch(:logging | :http | :mqtt) # OR
+5. Sample.Launcher.launch_many(:logging | :http | :mqtt ) # OR
+6. Sample.Launcher.launch_mix()
 
 ### How to use whoppex app in your own project
 
@@ -41,7 +46,7 @@ to do
 
 ### In Sample
 - Ease of use for tracking cookies and the like for HTTP
-- Example of non-HTTP agents (e.g. MQTT)
+- Give better example of unique identifiers per agent (launch_many produces all with same id for mqtt)
 
 ### In Whoppex
 - Mechnism to stop all currently running agents
