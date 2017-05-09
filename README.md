@@ -18,25 +18,39 @@ Erlixir based load generation tool
 ## Installing / How to Use
 
 ### Setup dependencies for sample app
-* Install RabbitMQ
-  * https://www.rabbitmq.com/install-debian.html
-  * service rabbitmq-server stop
-	* sudo rabbitmq-plugins enable rabbitmq_management
-  * sudo rabbitmqctl add_user test test
-  * sudo rabbitmqctl set_user_tags test administrator
-  * sudo rabbitmqctl set_permissions -p / test ".*" ".*" ".*"
-  * service rabbitmq-server start
-	* access via http://localhost:5672 with test:test
+
+Install RabbitMQ on same machine as sample app
+
+    https://www.rabbitmq.com/install-debian.html
+    service rabbitmq-server stop
+	  sudo rabbitmq-plugins enable rabbitmq_management
+    sudo rabbitmqctl add_user test test
+    sudo rabbitmqctl set_user_tags test administrator
+    sudo rabbitmqctl set_permissions -p / test ".*" ".*" ".*"
+    service rabbitmq-server start
+	  access via http://localhost:5672 with test:test
+
+### How to run sample app
+
+1. cd umbrella
+2. iex -S mix
+3. Sample.Launcher.launch(:logging | :http | :mqtt) # OR
+4. Sample.Launcher.launch_many(:logging | :http | :mqtt ) # OR
+5. Sample.Launcher.launch_mix()
+
+### How to use whoppex app in your own project
 
 to do
 
-## To Do
+## Project To Do
 
 ### In Sample
 - Ease of use for tracking cookies and the like for HTTP
-- Example of non-HTTP agents
+- Example of non-HTTP agents (e.g. MQTT)
 
 ### In Whoppex
+- Mechnism to stop all currently running agents
+- Mechanism to supply whoppex with full "scenario" and have it figure thigs out instead of individual function calls
 - Mechanism for ramp up and down of agents
 - integration with statd/graphite/etc for event tracking and test visualization
 - Logging to track agent and test success, agent errors, status codes, etc

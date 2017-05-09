@@ -4,11 +4,22 @@ defmodule Sample.LoggingAgent do
 
   def create_plan(enumerable_state) do
     Logger.info log("Reporting For Duty")
-    Enum.map(enumerable_state, fn _ -> [:say_hello, delay()] end)
+    [
+      Enum.map(enumerable_state, fn _ -> [:say_hello, delay()] end),
+      forever([           # loop forever on the passed in sub-plan
+        :ping,
+        delay()
+      ])
+    ]
   end
 
   def say_hello(state) do
     Logger.info log("hello world")
+    state
+  end
+
+  def ping(state) do
+    Logger.info log("pong")
     state
   end
 

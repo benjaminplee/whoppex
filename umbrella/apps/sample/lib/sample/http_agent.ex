@@ -14,10 +14,7 @@ defmodule Sample.HttpAgent do
         pause()           # wait for specific time (no random) using default
       ], 3),
       delay(2000, 4000),  # wait for between min and max ms
-      forever([           # loop forever on the passed in sub-plan
-        :say_goodbye,
-        delay()
-      ])
+      :say_goodbye
     ]
   end
 

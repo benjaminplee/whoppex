@@ -8,16 +8,16 @@ defmodule Sample.Launcher do
     GenServer.start_link(__MODULE__, :ok, name: @name)
   end
 
-  def launch() do
-    GenServer.cast(@name, :launch)
+  def launch(type) do
+    GenServer.cast(@name, {:launch, type})
   end
 
-  def launch_many() do
-    GenServer.cast(@name, :launch_many)
+  def launch_many(type) do
+    GenServer.cast(@name, {:launch_many, type})
   end
 
-  def launch_many_types() do
-    GenServer.cast(@name, :launch_many_types)
+  def launch_mix() do
+    GenServer.cast(@name, :launch_mix)
   end
 
   def init(state) do
@@ -25,19 +25,27 @@ defmodule Sample.Launcher do
     {:ok, state}
   end
 
-  def handle_cast(:launch, state) do
-    Whoppex.Supervisor.start_agent_spec({Sample.HttpAgent, :no_state})
+  def handle_cast({:launch, type}, state) do
+    Whoppex.Supervisor.start_agent_spec(map(type))
     {:noreply, state}
   end
 
-  def handle_cast(:launch_many, state) do
-    Whoppex.Supervisor.start_agent_specs({Sample.HttpAgent, :no_state}, 10)
+  def handle_cast({:launch_many, type}, state) do
+    Whoppex.Supervisor.start_agent_specs(map(type), 10)
     {:noreply, state}
   end
 
-  def handle_cast(:launch_many_types, state) do
-    Whoppex.Supervisor.start_agent_spec_list([{Sample.HttpAgent, :no_state}, {Sample.LoggingAgent, 1..5}])
+  def handle_cast(:launch_mix, state) do
+    Whoppex.Supervisor.start_agent_spec_list(List.flatten([
+      {Sample.LoggingAgent, 1..5},
+      Enum.map(1..10, fn _ -> map(:http) end),
+      Enum.map(1..100, fn _ -> map(:mqtt) end)
+    ]))
     {:noreply, state}
   end
+
+  defp map(:logging) do {Sample.LoggingAgent, 1..5} end
+  defp map(:http) do {Sample.HttpAgent, :no_state_needed} end
+  defp map(:mqtt) do {Sample.HttpAgent, :no_state_needed} end
 
 end
