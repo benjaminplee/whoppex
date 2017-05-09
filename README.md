@@ -17,6 +17,15 @@ Erlixir based load generation tool
 
 ## Installing / How to Use
 
+### Setup dependencies for sample app
+* Install RabbitMQ
+  * https://www.rabbitmq.com/install-debian.html
+  * service rabbitmq-server stop
+	* sudo rabbitmq-plugins enable rabbitmq_management
+  * service rabbitmq-server start
+
+
+
 to do
 
 ## To Do
@@ -39,3 +48,4 @@ to do
 - passing ci build
 - include type specs, review with dializer?
 - publish to hex
+
