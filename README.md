@@ -34,12 +34,12 @@ Send test msg (to verify setup)
 1. cd umbrella
 2. mix deps.get
 3. Run code in iex
-  1. iex -S mix
-  2. Sample.Launcher.launch(:logging | :http | :mqtt) # OR
-  3. Sample.Launcher.launch_many(:logging | :http | :mqtt ) # OR
-  4. Sample.Launcher.launch_mix()
-4. OR run code from mix
-  1. mix run --no-halt -e 'Sample.Launcher.launch_mix()' # OR SIMILAR AS ABOVE
+  * iex -S mix
+  * Sample.Launcher.launch(:logging | :http | :mqtt) # OR
+  * Sample.Launcher.launch_many(:logging | :http | :mqtt ) # OR
+  * Sample.Launcher.launch_mix()
+4. _OR_ run code from mix
+  * mix run --no-halt -e 'Sample.Launcher.launch_mix()' # OR SIMILAR AS ABOVE
 
 ### How to use whoppex app in your own project
 
