@@ -12,12 +12,8 @@ defmodule Sample.Launcher do
     GenServer.cast(@name, {:launch, type})
   end
 
-  def launch_many(type) do
-    GenServer.cast(@name, {:launch_many, type})
-  end
-
-  def launch_many_many(type) do
-    Enum.each(1..10, fn _ -> GenServer.cast(@name, {:launch_many, type}) end)
+  def launch_many(type, n \\ 10) do
+    GenServer.cast(@name, {:launch_many, type, n})
   end
 
   def launch_mix() do
@@ -34,8 +30,8 @@ defmodule Sample.Launcher do
     {:noreply, state}
   end
 
-  def handle_cast({:launch_many, type}, state) do
-    Whoppex.Supervisor.start_agent_specs(map(type), 10)
+  def handle_cast({:launch_many, type, n}, state) do
+    Whoppex.Supervisor.start_agent_specs(map(type), n)
     {:noreply, state}
   end
 
@@ -49,7 +45,7 @@ defmodule Sample.Launcher do
   end
 
   defp map(:logging) do {Sample.LoggingAgent, 1..5} end
-  defp map(:http) do {Sample.HttpAgent, "http://httpbin.com"} end
+  defp map(:http) do {Sample.HttpAgent, "http://iot-ci1.wwt.com:8084"} end
   defp map(:mqtt) do {Sample.MqttAgent, "localhost"} end
 
 end

@@ -36,7 +36,7 @@ Send test msg (to verify setup)
 3. Run code in iex
   * iex -S mix
   * Sample.Launcher.launch(:logging | :http | :mqtt) # OR
-  * Sample.Launcher.launch_many(:logging | :http | :mqtt ) # OR
+  * Sample.Launcher.launch_many(:logging | :http | :mqtt, times ) # where times is optional and defaults to 10, OR
   * Sample.Launcher.launch_mix()
 4. _OR_ run code from mix
   * mix run --no-halt -e 'Sample.Launcher.launch_mix()' # OR SIMILAR AS ABOVE
