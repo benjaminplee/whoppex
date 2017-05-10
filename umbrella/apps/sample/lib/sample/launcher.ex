@@ -16,6 +16,10 @@ defmodule Sample.Launcher do
     GenServer.cast(@name, {:launch_many, type})
   end
 
+  def launch_many_many(type) do
+    Enum.each(1..10, fn _ -> GenServer.cast(@name, {:launch_many, type}) end)
+  end
+
   def launch_mix() do
     GenServer.cast(@name, :launch_mix)
   end
