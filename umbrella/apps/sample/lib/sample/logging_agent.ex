@@ -1,30 +1,25 @@
 defmodule Sample.LoggingAgent do
   use Whoppex.Agent
-  require Logger
 
-  def create_plan(enumerable_state) do
-    Logger.info log("Reporting For Duty")
+  def create_plan(_state) do
     [
-      Enum.map(enumerable_state, fn _ -> [:say_hello, delay()] end),
-      forever([           # loop forever on the passed in sub-plan
+      # loop forever on the passed in sub-plan
+      forever([
         :ping,
+        delay(),
+        :pong,
         delay()
       ])
     ]
   end
 
-  def say_hello(state) do
-    Logger.info log("hello world")
-    state
-  end
-
   def ping(state) do
-    Logger.info log("pong")
+    Sample.Utils.log("ping")
     state
   end
 
-  defp log(msg) do
-    "Sample.Agent[#{inspect(self())}] - " <> msg
+  def pong(state) do
+    Sample.Utils.log("pong")
+    state
   end
-
 end

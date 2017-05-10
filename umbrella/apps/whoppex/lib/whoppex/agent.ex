@@ -1,11 +1,24 @@
 defmodule Whoppex.Agent do
 
   # Behavior for callback modules
+  @callback init(arg :: any) :: any
   @callback create_plan(arg :: any) :: [atom]
 
   defmacro __using__(_) do
     quote location: :keep do
       @behaviour Whoppex.Agent
+
+      def init(state) do
+        state
+      end
+
+      def id(state) do
+        inspect(self())
+      end
+
+      def create_plan(_state) do
+        [:noop]
+      end
 
       def forever(plan) do
         {:forever, plan}
@@ -35,7 +48,7 @@ defmodule Whoppex.Agent do
         max(10, ms)
       end
 
-      #defoverridable [init: 1]
+      defoverridable [init: 1, create_plan: 1]
     end
   end
 end

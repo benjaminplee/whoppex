@@ -1,25 +1,25 @@
 defmodule Whoppex.Worker do
-  use GenServer
   require Logger
+  use GenServer
 
   def start_link(agent_spec) do
     GenServer.start_link(__MODULE__, agent_spec, [])
   end
 
   def init({agent_module, agent_state}) do
-    Logger.info "Starting Whoppex Agent Worker"
     GenServer.cast(self(), :start)
-    {:ok, {agent_module, [], agent_state}}
+    {:ok, {agent_module, [], agent_module.init(agent_state)}}
   end
 
   def handle_cast(:start, {agent_module, [], agent_state}) do
+    log(agent_module, "STARTING")
     plan = agent_module.create_plan(agent_state)
     GenServer.cast(self(), :next)
     {:noreply, {agent_module, plan, agent_state}}
   end
 
-  def handle_cast(:next, {_, [], _} = state) do
-    Logger.info("Whoppex Agent Worker Finished #{inspect(state)}")
+  def handle_cast(:next, {agent_module, [], _} = state) do
+    log(agent_module, "FINISHED")
     {:noreply, state}
   end
 
@@ -55,5 +55,7 @@ defmodule Whoppex.Worker do
     {next_step, rest_of_the_plan}
   end
 
+  defp log(agent_module, msg) do
+    Logger.info("WorkerAgent[#{agent_module}:#{inspect(self())}] - #{msg}")
+  end
 end
-

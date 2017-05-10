@@ -33,10 +33,13 @@ Send test msg (to verify setup)
 
 1. cd umbrella
 2. mix deps.get
-3. iex -S mix
-4. Sample.Launcher.launch(:logging | :http | :mqtt) # OR
-5. Sample.Launcher.launch_many(:logging | :http | :mqtt ) # OR
-6. Sample.Launcher.launch_mix()
+3. Run code in iex
+  1. iex -S mix
+  2. Sample.Launcher.launch(:logging | :http | :mqtt) # OR
+  3. Sample.Launcher.launch_many(:logging | :http | :mqtt ) # OR
+  4. Sample.Launcher.launch_mix()
+4. OR run code from mix
+  1. mix run --no-halt -e 'Sample.Launcher.launch_mix()' # OR SIMILAR AS ABOVE
 
 ### How to use whoppex app in your own project
 
@@ -46,7 +49,6 @@ to do
 
 ### In Sample
 - Ease of use for tracking cookies and the like for HTTP
-- Give better example of unique identifiers per agent (launch_many produces all with same id for mqtt)
 
 ### In Whoppex
 - Mechnism to stop all currently running agents

@@ -45,16 +45,7 @@ defmodule Sample.Launcher do
   end
 
   defp map(:logging) do {Sample.LoggingAgent, 1..5} end
-  defp map(:http) do {Sample.HttpAgent, rnd_id()} end
-  defp map(:mqtt) do {Sample.MqttAgent, rnd_id()} end
-
-  defp rnd_id() do
-    id_length = 5
-    possible_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" |> String.split("", trim: true)
-
-    1..id_length
-      |> Enum.reduce([], fn(_, acc) -> [Enum.random(possible_chars) | acc] end)
-      |> Enum.join("")
-  end
+  defp map(:http) do {Sample.HttpAgent, "http://httpbin.com"} end
+  defp map(:mqtt) do {Sample.MqttAgent, "localhost"} end
 
 end
