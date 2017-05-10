@@ -30,8 +30,26 @@ defmodule Whoppex.Worker do
     {:noreply, {agent_module, rest_of_the_plan, new_agent_state}}
   end
 
+  def handle_cast(:repeat_period_over, {agent_module, [_repeating_plan | rest_of_the_plan], agent_state}) do
+    GenServer.cast(self(), :next)
+    {:noreply, {agent_module, rest_of_the_plan, agent_state}}
+  end
+
   defp parse_plan([{:forever, steps} | _rest_of_the_plan] = plan) do
     {:noop, [steps | plan]}
+  end
+
+  defp parse_plan([{:repeat_for_period, plan, period_ms} | rest_of_the_plan]) do
+    {:ok, _} = :timer.apply_after(period_ms, GenServer, :cast, [self(), :repeat_period_over])
+    {:noop, [{:repeating_for_period, plan, plan} | rest_of_the_plan]}
+  end
+
+  defp parse_plan([{:repeating_for_period, [], template_plan} | rest_of_the_plan]) do
+    {:noop, [{:repeating_for_period, template_plan, template_plan} | rest_of_the_plan]}
+  end
+
+  defp parse_plan([{:repeating_for_period, [next_step | rest_of_repeating_plan], template_plan} | rest_of_the_plan]) do
+    {:noop, [next_step | [{:repeating_for_period, rest_of_repeating_plan, template_plan} | rest_of_the_plan]]}
   end
 
   defp parse_plan([{:repeat, _next_step, 0} | rest_of_the_plan]) do

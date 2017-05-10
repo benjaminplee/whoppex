@@ -8,8 +8,9 @@ Erlixir based load generation tool and sample application
   * Plans are lists of arbitrary function names indicating steps to perform
   * Steps can also be sublists which will be expanded
 	* Steps may also use built-in constructs
-		* repeat/forever
+		* repeat/repeat_for_period/forever
 		* delay/pause
+    * noop
 * Core is not protocol dependent
 * Ability to launch one agent, many agents, or list of agents
 * Agents may carry their own state along (e.g. identity, cookies, open socket)
@@ -55,7 +56,6 @@ to do
 
 ### In Whoppex
 
-- Add ability to have plans include repeats for at least fixed time (e.g. repeat this loop for next 2 minutes)
 - Change pause impl to not sleep but delay send of next msg to actor to allow for kill or other cmd during pause/delay
 - Mechanism to stop all currently running agents
 - Mechanism to report (e.g. publish to mqtt, log, etc) status of agents (e.g. # alive, state of test, etc) and configurable intervals

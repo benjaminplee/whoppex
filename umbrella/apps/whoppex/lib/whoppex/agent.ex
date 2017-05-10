@@ -28,6 +28,11 @@ defmodule Whoppex.Agent do
         {:repeat, plan, times}
       end
 
+      def repeat_for_period(plan, time \\ {30, :second}) do
+        period_ms = enforce_ms(time)
+        {:repeat_for_period, plan, period_ms}
+      end
+
       def delay(time \\ {1, :second}) do
         ms = enforce_ms(time)
         {:pause, enforce_min_time(round(:rand.normal() * ms))}
