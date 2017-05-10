@@ -50,6 +50,8 @@ to do
 ### In Sample
 
 - Ease of use for tracking cookies and the like for HTTP
+- Consider switching (or trying out) Bus library for MQTT as it may be more mature: https://i-m-v-j.github.io/Bus/
+- Demonstrate some sort of secure comm with HTTP and MQTT, ideally with unique identies and certificate usage
 
 ### In Whoppex
 
