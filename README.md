@@ -1,6 +1,6 @@
 # Whoppex
 
-Erlixir based load generation tool
+Erlixir based load generation tool and sample application
 
 ## Features
 
@@ -48,9 +48,12 @@ to do
 ## Project To Do
 
 ### In Sample
+
 - Ease of use for tracking cookies and the like for HTTP
 
 ### In Whoppex
+
+- Add ability to have plans include repeats for at least fixed time (e.g. repeat this loop for next 2 minutes)
 - Change pause impl to not sleep but delay send of next msg to actor to allow for kill or other cmd during pause/delay
 - Mechanism to stop all currently running agents
 - Mechanism to report (e.g. publish to mqtt, log, etc) status of agents (e.g. # alive, state of test, etc) and configurable intervals
