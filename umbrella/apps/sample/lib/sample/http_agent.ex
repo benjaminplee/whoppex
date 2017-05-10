@@ -38,6 +38,6 @@ defmodule Sample.HttpAgent do
 
   defp get_and_log_status(url) do
     {:ok, %HTTPoison.Response{status_code: status}} = HTTPoison.get(url)
-    Sample.Utils.log("status recieved - #{status}")
+    Sample.Utils.log("HTTPRESPONSE - #{url} - #{status}")
   end
 end

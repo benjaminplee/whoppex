@@ -45,7 +45,7 @@ defmodule Sample.Launcher do
   end
 
   defp map(:logging) do {Sample.LoggingAgent, 1..5} end
-  defp map(:http) do {Sample.HttpAgent, "http://iot-ci1.wwt.com:8084"} end
+  defp map(:http) do {Sample.HttpAgent, "https://httpbin.org"} end
   defp map(:mqtt) do {Sample.MqttAgent, "localhost"} end
 
 end
