@@ -51,6 +51,7 @@ to do
 - Ease of use for tracking cookies and the like for HTTP
 
 ### In Whoppex
+- Change pause impl to not sleep but delay send of next msg to actor to allow for kill or other cmd during pause/delay
 - Mechanism to stop all currently running agents
 - Mechanism to report (e.g. publish to mqtt, log, etc) status of agents (e.g. # alive, state of test, etc) and configurable intervals
 - Mechanism to generate basic reports of success or data over time (this may be out of scope)
