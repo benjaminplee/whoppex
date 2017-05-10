@@ -6,12 +6,12 @@ defmodule Sample.HttpAgent do
       :say_hello,         # execute function as step
       delay(),            # use default delay with normal dist randomization
       repeat(:get_ip),    # repeat specific step (function name atom) default times
-      delay(2000),        # use specific delay (in ms) with normal dist
+      delay({2, :second}),        # use specific delay (in ms) with normal dist
       repeat([            # repeat the sub-plan 3 times
         :get_teapot,
         pause()           # wait for specific time (no random) using default
       ], 3),
-      delay(2000, 4000),  # wait for between min and max ms
+      delay({2, :second}, {4, :second}),  # wait for between min and max ms
       :say_goodbye
     ]
   end
