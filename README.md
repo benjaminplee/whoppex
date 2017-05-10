@@ -51,7 +51,9 @@ to do
 - Ease of use for tracking cookies and the like for HTTP
 
 ### In Whoppex
-- Mechnism to stop all currently running agents
+- Mechanism to stop all currently running agents
+- Mechanism to report (e.g. publish to mqtt, log, etc) status of agents (e.g. # alive, state of test, etc) and configurable intervals
+- Mechanism to generate basic reports of success or data over time (this may be out of scope)
 - Mechanism to supply whoppex with full "scenario" and have it figure thigs out instead of individual function calls
 - Mechanism for ramp up and down of agents
 - integration with statd/graphite/etc for event tracking and test visualization
