@@ -29,8 +29,18 @@ defmodule Whoppex.Supervisor do
     start_agent_spec_list(rest)
   end
 
+  def stop_all_agents() do
+    Enum.each(Supervisor.which_children(self()), fn x -> stop_agent(x) end)
+    :ok
+  end
+
   def init(:ok) do
-    children = [ worker(Whoppex.Worker, [], restart: :temporary) ]
+    max_shutdown_time_in_ms = 5000
+    children = [ worker(Whoppex.Worker, [], restart: :transient, shutdown: max_shutdown_time_in_ms) ]
     supervise(children, strategy: :simple_one_for_one)
+  end
+
+  defp stop_agent({_child_id, pid, _type, _modules}) when is_pid(pid) do
+    GenServer.cast(pid, :shut_down)
   end
 end

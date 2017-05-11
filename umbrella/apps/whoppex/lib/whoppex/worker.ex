@@ -18,9 +18,14 @@ defmodule Whoppex.Worker do
     {:noreply, {agent_module, plan, agent_state}}
   end
 
-  def handle_cast(:next, {agent_module, [], _} = state) do
+  def handle_cast(:shut_down, {agent_module, [], _}) do
+    log(agent_module, "SHUTDOWN")
+    {:stop, :normal, :shut_down_signal}
+  end
+
+  def handle_cast(:next, {agent_module, [], _}) do
     log(agent_module, "FINISHED")
-    {:noreply, state}
+    {:stop, :normal, :finished_plan}
   end
 
   def handle_cast(:next, {agent_module, plan, agent_state}) do
