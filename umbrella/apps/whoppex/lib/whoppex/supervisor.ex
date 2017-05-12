@@ -30,7 +30,7 @@ defmodule Whoppex.Supervisor do
   end
 
   def stop_all_agents() do
-    Enum.each(Supervisor.which_children(self()), fn x -> stop_agent(x) end)
+    Enum.each(Supervisor.which_children(@name), fn x -> stop_agent(x) end)
     :ok
   end
 

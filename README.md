@@ -42,6 +42,17 @@ Send test msg (to verify setup)
 4. _OR_ run code from mix
   * mix run --no-halt -e 'Sample.Launcher.launch_mix()' # OR SIMILAR AS ABOVE
 
+### To demonstrate agent shutdown
+
+From one terminal session, start agents
+
+    elixir --sname test1 --cookie 321 -S mix run --no-halt -e 'Sample.Launcher.launch_many(:http)'
+
+From another session, connect to remote shell and tell supervisor to stopp agent children
+
+    iex --sname test2 --cookie 321 --remsh test1@devenv
+    iex(test1@devenv)1> Whoppex.Supervisor.stop_all_agents()
+
 ### How to use whoppex app in your own project
 
 to do

@@ -6,9 +6,9 @@ defmodule Sample.LoggingAgent do
       # loop forever on the passed in sub-plan
       forever([
         :ping,
-        delay(),
+        pause(500),
         :pong,
-        delay()
+        pause(500)
       ])
     ]
   end
