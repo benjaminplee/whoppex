@@ -64,3 +64,12 @@ defmodule Whoppex.Agent do
     end
   end
 end
+
+defmodule Whoppex.Agent.ForeverNoOpAgent do
+  use Whoppex.Agent
+
+  def create_plan(_) do
+    [forever(:noop)]
+  end
+
+end
