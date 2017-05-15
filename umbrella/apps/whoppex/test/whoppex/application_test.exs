@@ -1,5 +1,5 @@
 defmodule Whoppex.ApplicationTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   import Whoppex.Utils
 
   doctest Whoppex.Application
