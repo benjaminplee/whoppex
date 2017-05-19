@@ -85,6 +85,10 @@ defmodule Whoppex.AgentTest do
     assert {:pause, 1000} == Agent.pause({1, :second})
   end
 
+  test "noop is passthrough" do
+    assert :foo = Agent.noop(:foo)
+  end
+
   defmodule SampleAgent do
     use Whoppex.Agent
   end
