@@ -1,14 +1,14 @@
-defmodule Whoppex.SupervisorTest do
+defmodule Whoppex.AgentSupervisorTest do
   use ExUnit.Case
   import Whoppex.Utils
-  alias Whoppex.Supervisor, as: TM
+  alias Whoppex.AgentSupervisor, as: TM
 
-  doctest Whoppex.Supervisor
+  doctest Whoppex.AgentSupervisor
 
   setup do
     # TODO get rid of this echo-chamber
     # TODO this, and calls below, are non-deterministic due to casts for shutdown unlike start_links which happen in blocking calls
-    Whoppex.Supervisor.stop_all_agents()
+    TM.stop_all_agents()
   end
 
   test "implements behavior" do
