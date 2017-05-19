@@ -1,10 +1,6 @@
-defmodule Whoppex.SampleAgent do
-  use Whoppex.Agent
-end
-
 defmodule Whoppex.AgentTest do
   use ExUnit.Case, async: true
-  alias Whoppex.SampleAgent, as: Agent
+  alias Whoppex.AgentTest.SampleAgent, as: Agent
 
   doctest Whoppex.Agent
 
@@ -19,6 +15,10 @@ defmodule Whoppex.AgentTest do
 
   test "default create_plan is noop" do
     assert [:noop] == Agent.create_plan(:anything)
+  end
+
+  defmodule SampleAgent do
+    use Whoppex.Agent
   end
 
 end
