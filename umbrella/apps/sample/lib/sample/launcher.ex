@@ -26,17 +26,17 @@ defmodule Sample.Launcher do
   end
 
   def handle_cast({:launch, type}, state) do
-    Whoppex.Supervisor.start_agent_spec(map(type))
+    Whoppex.AgentSupervisor.start_agent_spec(map(type))
     {:noreply, state}
   end
 
   def handle_cast({:launch_many, type, n}, state) do
-    Whoppex.Supervisor.start_agent_specs(map(type), n)
+    Whoppex.AgentSupervisor.start_agent_specs(map(type), n)
     {:noreply, state}
   end
 
   def handle_cast(:launch_mix, state) do
-    Whoppex.Supervisor.start_agent_spec_list(List.flatten([
+    Whoppex.AgentSupervisor.start_agent_spec_list(List.flatten([
       {Sample.LoggingAgent, 1..5},
       Enum.map(1..10, fn _ -> map(:http) end),
       Enum.map(1..100, fn _ -> map(:mqtt) end)

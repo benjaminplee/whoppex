@@ -8,7 +8,10 @@ defmodule Whoppex.Supervisor do
   end
 
   def init(_) do
-    children = [ supervisor(Whoppex.AgentSupervisor, [], restart: :permanent, shutdown: 5000) ]
+    children = [
+      supervisor(Whoppex.AgentSupervisor, [], restart: :permanent, shutdown: 5000),
+      worker(Whoppex.Launcher, [], restart: :permanent, shutdown: 5000)
+    ]
     supervise(children, strategy: :one_for_one)
   end
 end
