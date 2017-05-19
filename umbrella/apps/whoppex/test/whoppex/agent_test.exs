@@ -48,7 +48,10 @@ defmodule Whoppex.AgentTest do
     assert is_integer(ms1)
     assert 10 <= ms1
 
-    assert {:pause, ms2} = Agent.delay()
+    # Enforce seeding after first so not to get dupes
+    _ = :rand.seed(:exs1024, {123, 123534, 345345})
+
+    assert {:pause, ms2} = Agent.delay({10, :second})
     assert is_integer(ms2)
     assert 10 <= ms2
 
@@ -57,13 +60,16 @@ defmodule Whoppex.AgentTest do
 
   test "delay pauses for random distribution between given min and max" do
     min = 1
-    max = 100
+    max = {10, :second}
 
     assert {:pause, ms1} = Agent.delay(min, max)
     assert is_integer(ms1)
     assert 10 <= ms1
     assert min < ms1
     assert max > ms1
+    
+    # Enforce seeding after first so not to get dupes
+    _ = :rand.seed(:exs1024, {123, 123534, 345345})
 
     assert {:pause, ms2} = Agent.delay(min, max)
     assert is_integer(ms2)
@@ -72,7 +78,11 @@ defmodule Whoppex.AgentTest do
     assert max > ms2
 
     assert ms1 !== ms2
+  end
 
+  test "pause is passthrough with enforcement of min time" do
+    assert {:pause, 10} == Agent.pause(1)
+    assert {:pause, 1000} == Agent.pause({1, :second})
   end
 
   defmodule SampleAgent do
