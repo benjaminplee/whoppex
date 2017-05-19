@@ -6,6 +6,7 @@ defmodule Whoppex.Agent do
 
   defmacro __using__(_) do
     quote location: :keep do
+      import Whoppex.Helpers
       @behaviour Whoppex.Agent
 
       @min_ms 10
@@ -54,13 +55,6 @@ defmodule Whoppex.Agent do
       def noop(state) do
         state
       end
-
-      defp enforce_min_time(ms) do
-        max(@min_ms, ms)
-      end
-
-      defp enforce_ms({value, unit}) do System.convert_time_unit(value, unit, :millisecond) end
-      defp enforce_ms(value) do value end
 
       defoverridable [init: 1, create_plan: 1]
     end
