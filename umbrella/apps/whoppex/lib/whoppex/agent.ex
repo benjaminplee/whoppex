@@ -8,6 +8,8 @@ defmodule Whoppex.Agent do
     quote location: :keep do
       @behaviour Whoppex.Agent
 
+      @min_ms 10
+
       def init(state) do
         state
       end
@@ -29,7 +31,7 @@ defmodule Whoppex.Agent do
       end
 
       def repeat_for_period(plan, time \\ {30, :second}) do
-        period_ms = enforce_ms(time)
+        period_ms = enforce_min_time(enforce_ms(time))
         {:repeat_for_period, plan, period_ms}
       end
 
@@ -54,7 +56,7 @@ defmodule Whoppex.Agent do
       end
 
       defp enforce_min_time(ms) do
-        max(10, ms)
+        max(@min_ms, ms)
       end
 
       defp enforce_ms({value, unit}) do System.convert_time_unit(value, unit, :millisecond) end
