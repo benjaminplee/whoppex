@@ -1,4 +1,5 @@
 defmodule Whoppex.Agent do
+  defstruct module: Whoppex.Agent.ForeverNoOpAgent, initial_state: :none
 
   # Behavior for callback modules
   @callback init(arg :: any) :: any

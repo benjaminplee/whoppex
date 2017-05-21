@@ -7,35 +7,14 @@ defmodule Whoppex.AgentSupervisor do
     Supervisor.start_link(__MODULE__, :ok, name: @name)
   end
 
-  @spec start_agent_spec(Whoppex.Worker.agent_spec) :: :ok
-  def start_agent_spec(agent_spec) do
-    start_agent_specs(agent_spec, 1)
+  @spec launch(%Whoppex.Agent{}, non_neg_integer) :: Supervisor.on_start_child
+  def launch(agent_spec, start_delay_ms) do
+    Supervisor.start_child(@name, [agent_spec, start_delay_ms])
   end
 
-  def start_agent_specs(_agent_spec, 0) do
-    :ok
-  end
-
-  @spec start_agent_specs(Whoppex.Worker.agent_spec, integer) :: :ok
-  def start_agent_specs(agent_spec, n) do
-    Supervisor.start_child(@name, [agent_spec])
-    start_agent_specs(agent_spec, n - 1)
-  end
-
-  @spec start_agent_spec_list([Whoppex.Worker.agent_spec]) :: :ok
-  def start_agent_spec_list([]) do
-    :ok
-  end
-
-  @spec start_agent_spec_list([Whoppex.Worker.agent_spec]) :: :ok
-  def start_agent_spec_list([agent_spec | rest]) do
-    start_agent_spec(agent_spec)
-    start_agent_spec_list(rest)
-  end
-
-  @spec stop_all_agents() :: :ok
-  def stop_all_agents() do
-    living_agent_pids() |> Enum.each(fn pid -> GenServer.cast(pid, :shut_down) end)
+  @spec stop_all() :: :ok
+  def stop_all(matching_fun) do
+    #living_agent_pids() |> Enum.each(fn pid -> GenServer.cast(pid, :shut_down) end)
     :ok
   end
 
