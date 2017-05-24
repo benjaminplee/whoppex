@@ -2,22 +2,15 @@ defmodule Whoppex.Worker do
   require Logger
   use GenServer
 
-  @typedoc """
-  Specification for a new agent.
-  
-  Composed of callback module implementing the Whoppex.Agent behavior
-  and the initial agent state.
-  """
-  @type agent_spec :: {module(), any()}
-  # TODO Consider switching this to a struct to reduce boilerplate
-
-  @spec start_link(agent_spec) :: GenServer.on_start
-  def start_link(agent_spec) do
-    GenServer.start_link(__MODULE__, agent_spec, [])
+  #@spec start_link(agent_spec) :: GenServer.on_start
+  def start_link(spec, delay_ms) do
+    GenServer.start_link(__MODULE__, {spec, delay_ms}, [])
   end
 
-  def init({agent_module, agent_state}) do
-    GenServer.cast(self(), :start)
+  def init({spec, delay_ms}) do
+    :timer.apply_after(delay_ms, GenServer, :cast, [self(), :start])
+    agent_module = spec.module
+    agent_state = spec.state
     {:ok, {agent_module, [], agent_module.init(agent_state)}}
   end
 

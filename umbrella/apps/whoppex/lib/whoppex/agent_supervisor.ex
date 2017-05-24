@@ -12,11 +12,10 @@ defmodule Whoppex.AgentSupervisor do
     Supervisor.start_child(@name, [agent_spec, start_delay_ms])
   end
 
-  @spec stop_all() :: :ok
-  def stop_all(matching_fun) do
-    #living_agent_pids() |> Enum.each(fn pid -> GenServer.cast(pid, :shut_down) end)
+  def stop_all(_matching_fun) do
+    living_agent_pids() |> Enum.each(fn pid -> GenServer.cast(pid, :shut_down) end)
     :ok
-  end
+  end 
 
   @spec num_agents() :: integer
   def num_agents() do

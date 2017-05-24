@@ -26,26 +26,26 @@ defmodule Sample.Launcher do
   end
 
   def handle_cast({:launch, type}, state) do
-    Whoppex.AgentSupervisor.start_agent_spec(map(type))
+    Whoppex.Commander.launch_agent(map(type))
     {:noreply, state}
   end
 
   def handle_cast({:launch_many, type, n}, state) do
-    Whoppex.AgentSupervisor.start_agent_specs(map(type), n)
+    Whoppex.Commander.launch_agents_every(map(type), n, {5, :seconds})
     {:noreply, state}
   end
 
   def handle_cast(:launch_mix, state) do
-    Whoppex.AgentSupervisor.start_agent_spec_list(List.flatten([
-      {Sample.LoggingAgent, 1..5},
+    Whoppex.Commander.launch_mix_over(List.flatten([
+      map(:logging),
       Enum.map(1..10, fn _ -> map(:http) end),
       Enum.map(1..100, fn _ -> map(:mqtt) end)
     ]))
     {:noreply, state}
   end
 
-  defp map(:logging) do {Sample.LoggingAgent, 1..5} end
-  defp map(:http) do {Sample.HttpAgent, "https://httpbin.org"} end
-  defp map(:mqtt) do {Sample.MqttAgent, "localhost"} end
+  defp map(:logging) do %Whoppex.Agent{module: Sample.LoggingAgent, state: 1..5} end
+  defp map(:http) do %Whoppex.Agent{module: Sample.HttpAgent, state: "https://httpbin.org"} end
+  defp map(:mqtt) do %Whoppex.Agent{module: Sample.MqttAgent, state: "localhost"} end
 
 end

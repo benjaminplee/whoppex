@@ -1,5 +1,5 @@
 defmodule Whoppex.Agent do
-  defstruct module: Whoppex.Agent.ForeverNoOpAgent, initial_state: :none
+  defstruct module: Whoppex.Agent.ForeverNoOpAgent, state: :none
 
   # Behavior for callback modules
   @callback init(arg :: any) :: any
@@ -33,24 +33,24 @@ defmodule Whoppex.Agent do
       end
 
       def repeat_for_period(plan, time \\ {30, :second}) do
-        period_ms = enforce_min_time(enforce_ms(time))
+        period_ms = enforce_min_time(enforce_ms(time), @min_ms)
         {:repeat_for_period, plan, period_ms}
       end
 
       def delay(time \\ {1, :second}) do
         ms = enforce_ms(time)
-        {:pause, enforce_min_time(round(:rand.normal() * ms))}
+        {:pause, enforce_min_time(round(:rand.normal() * ms), @min_ms)}
       end
 
       def delay(min_time, max_time) do
         min_ms = enforce_ms(min_time)
         max_ms = enforce_ms(max_time)
-        {:pause, enforce_min_time(:rand.uniform(max_ms - min_ms) + min_ms)}
+        {:pause, enforce_min_time(:rand.uniform(max_ms - min_ms) + min_ms, @min_ms)}
       end
 
       def pause(time \\ {1, :second}) do
         ms = enforce_ms(time)
-        {:pause, enforce_min_time(ms)}
+        {:pause, enforce_min_time(ms, @min_ms)}
       end
 
       def noop(state) do
