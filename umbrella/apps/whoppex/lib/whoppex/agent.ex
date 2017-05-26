@@ -57,7 +57,7 @@ defmodule Whoppex.Agent do
         state
       end
 
-      defoverridable [init: 1, create_plan: 1]
+      defoverridable [id: 1, init: 1, create_plan: 1]
     end
   end
 end
