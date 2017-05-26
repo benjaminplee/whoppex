@@ -16,8 +16,24 @@ defmodule Sample.Launcher do
     GenServer.cast(@name, {:launch_many, type, n})
   end
 
+  def launch_many_over(type, time, n \\ 10) do
+    GenServer.cast(@name, {:launch_many_over, type, time, n})
+  end
+
+  def launch_many_every(type, time, n \\ 10) do
+    GenServer.cast(@name, {:launch_many_every, type, time, n})
+  end
+
   def launch_mix() do
     GenServer.cast(@name, :launch_mix)
+  end
+
+  def launch_mix_over(time \\ {10, :seconds}) do
+    GenServer.cast(@name, {:launch_mix_over, time})
+  end
+
+  def launch_mix_every(time \\ {2, :seconds}) do
+    GenServer.cast(@name, {:launch_mix_every, time})
   end
 
   def init(state) do
@@ -31,17 +47,41 @@ defmodule Sample.Launcher do
   end
 
   def handle_cast({:launch_many, type, n}, state) do
-    Whoppex.Commander.launch_agents_every(map(type), n, {5, :seconds})
+    Whoppex.Commander.launch_agents_every(n, map(type), {1, :seconds})
+    {:noreply, state}
+  end
+
+  def handle_cast({:launch_many_over, type, time, n}, state) do
+    Whoppex.Commander.launch_agents_over(n, map(type), time)
+    {:noreply, state}
+  end
+
+  def handle_cast({:launch_many_every, type, time, n}, state) do
+    Whoppex.Commander.launch_agents_every(n, map(type), time)
     {:noreply, state}
   end
 
   def handle_cast(:launch_mix, state) do
-    Whoppex.Commander.launch_mix_over(List.flatten([
+    Whoppex.Commander.launch_mix_over(create_mix())
+    {:noreply, state}
+  end
+
+  def handle_cast({:launch_mix_over, time}, state) do
+    Whoppex.Commander.launch_mix_over(create_mix(), time)
+    {:noreply, state}
+  end
+
+  def handle_cast({:launch_mix_every, time}, state) do
+    Whoppex.Commander.launch_mix_every(create_mix(), time)
+    {:noreply, state}
+  end
+
+  defp create_mix() do
+    List.flatten([
       map(:logging),
       Enum.map(1..10, fn _ -> map(:http) end),
       Enum.map(1..100, fn _ -> map(:mqtt) end)
-    ]))
-    {:noreply, state}
+    ])
   end
 
   defp map(:logging) do %Whoppex.Agent{module: Sample.LoggingAgent, state: 1..5} end
