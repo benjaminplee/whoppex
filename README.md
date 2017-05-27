@@ -56,7 +56,7 @@ From one terminal session, start agents
 
     elixir --sname test1 --cookie 321 -S mix run --no-halt -e 'Sample.Launcher.launch_many(:http)'
 
-From another session, connect to remote shell and tell supervisor to stopp agent children
+From another session, connect to remote shell and tell supervisor to stop agent children
 
     iex --sname test2 --cookie 321 --remsh test1@devenv
     iex(test1@devenv)1> Whoppex.Supervisor.stop_all_agents()
@@ -75,6 +75,7 @@ to do
 
 ### In Whoppex
 
+- Move last pieces of interfacing work to commander from agent supervisor
 - Change pause impl to not sleep but delay send of next msg to actor to allow for kill or other cmd during pause/delay
 - Mechanism to report (e.g. publish to mqtt, log, etc) status of agents (e.g. # alive, state of test, etc) and configurable intervals
 - Mechanism to generate basic reports of success or data over time (this may be out of scope)
