@@ -88,7 +88,7 @@ to do
 - Document usage and consider how other people can use the base app, integrate with their own
     elixir apps, or ideally use without having to build their own app (e.g. with .exs files)
 - Full test coverage
-- Passing ci build
+- Passing CI build
 - Include type specs, review with dializer?
 - Publish to hex
 
