@@ -11,10 +11,18 @@ Erlixir based load generation tool and sample application
 		* repeat/repeat_for_period/forever
 		* delay/pause
     * noop
+  * Common functions can be overridden
+		* init - initialize state 1 time at the begining
+		* id - set id for a given agent, used in identification and logging
 * Core is not protocol dependent
-* Ability to launch one agent, many agents, or list of agents
+* Agent control is through the Commander
+	* Launching agents can take many forms and involves creating an Agent "spec" structurej
+		* one agent, many, or a list
+		* immediate, every ___ time units, or all over ___ time unit ("ramp-in")
+  * Stop all agents
+	* Count living agents
 * Agents may carry their own state along (e.g. identity, cookies, open socket)
-* Includes sample agent (sample app under umbrella) to demonstrate basic concepts (HTTP, Logging, and MQTT)
+* Includes sample agent (sample app under umbrella) to demonstrate basic concepts and common protocols (HTTP, Logging, and MQTT)
 
 ## Installing / How to Use
 
@@ -68,21 +76,19 @@ to do
 ### In Whoppex
 
 - Change pause impl to not sleep but delay send of next msg to actor to allow for kill or other cmd during pause/delay
-- Mechanism to stop all currently running agents
 - Mechanism to report (e.g. publish to mqtt, log, etc) status of agents (e.g. # alive, state of test, etc) and configurable intervals
 - Mechanism to generate basic reports of success or data over time (this may be out of scope)
 - Mechanism to supply whoppex with full "scenario" and have it figure thigs out instead of individual function calls
-- Mechanism for ramp up and down of agents
-- integration with statd/graphite/etc for event tracking and test visualization
+- Integration with statd/graphite/etc for event tracking and test visualization
 - Logging to track agent and test success, agent errors, status codes, etc
 - Ability to run from cmd line with some sort of preset configuration
 - Easy distributed testing modes (launch agents round-robin or preset across nodes)
 	- relaunch agents on other nodes or redistribute based on load
-- ability to set "fixed" number of agents and restart on death or end of plan to maintain "averager user load"
-- document usage and consider how other people can use the base app, integrate with their own
+- Ability to set "fixed" number of agents and restart on death or end of plan to maintain "averager user load"
+- Document usage and consider how other people can use the base app, integrate with their own
     elixir apps, or ideally use without having to build their own app (e.g. with .exs files)
-- full test coverage
-- passing ci build
-- include type specs, review with dializer?
-- publish to hex
+- Full test coverage
+- Passing ci build
+- Include type specs, review with dializer?
+- Publish to hex
 
