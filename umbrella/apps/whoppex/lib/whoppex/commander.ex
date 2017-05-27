@@ -49,8 +49,8 @@ defmodule Whoppex.Commander do
     :ok
   end
 
-  def stop_all(matching_fun \\ :todo_matching_fun) do
-    GenServer.cast(@name, {:stop_all, matching_fun})
+  def stop_all() do
+    GenServer.cast(@name, :stop_all)
   end
 
   #### PRIVATE ####
@@ -79,7 +79,7 @@ defmodule Whoppex.Commander do
     {:noreply, state}
   end
 
-  def handle_cast(:stop_all, matching_fun, state) do
+  def handle_cast(:stop_all, state) do
     Whoppex.AgentSupervisor.stop_all(matching_fun)
     {:noreply, state}
   end
