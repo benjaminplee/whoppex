@@ -80,7 +80,7 @@ defmodule Whoppex.Commander do
   end
 
   def handle_cast(:stop_all, state) do
-    Whoppex.AgentSupervisor.stop_all(matching_fun)
+    Whoppex.AgentSupervisor.stop_all()
     {:noreply, state}
   end
 
