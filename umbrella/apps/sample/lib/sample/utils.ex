@@ -10,11 +10,10 @@ defmodule Sample.Utils do
       |> Enum.join("")
   end
 
-  def log(msg) do
-    log(inspect(self()), msg)
-  end
+  def log(msg) do log(inspect(self()), msg) end
+  def log(agent_id, msg) do Logger.info("Agent[#{agent_id}] - #{msg}") end
 
-  def log(agent_id, msg) do
-    Logger.info("Agent[#{agent_id}] - #{msg}")
-  end
+  def warn(msg) do warn(inspect(self()), msg) end
+  def warn(agent_id, msg) do Logger.warn("Agent[#{agent_id}] - #{msg}") end
+
 end
