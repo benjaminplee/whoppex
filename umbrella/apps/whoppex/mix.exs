@@ -1,8 +1,13 @@
 defmodule Whoppex.Mixfile do
   use Mix.Project
 
+  @name :whoppex
+
   def project do
-    [app: :whoppex,
+    [app: @name,
+     description: "Erlixir based load generation tool",
+     source_url: "https://github.com/benjaminplee/whoppex",
+     package: package(),
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
@@ -37,6 +42,15 @@ defmodule Whoppex.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [{:ex_doc, ">= 0.0.0", only: :dev}]
+  end
+
+  defp package do
+    [
+      name: @name,
+      maintainers: ["Benjamin P Lee"],
+      licenses: ["Apache 2.0"],
+      links: %{"GitHub" => "https://github.com/benjaminplee/whoppex"}
+    ]
   end
 end
