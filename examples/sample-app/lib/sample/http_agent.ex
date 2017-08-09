@@ -1,5 +1,6 @@
 defmodule Sample.HttpAgent do
   use Whoppex.Agent
+  require Logger
 
   def create_plan(_host) do
     [
@@ -17,12 +18,12 @@ defmodule Sample.HttpAgent do
   end
 
   def say_hello(host) do
-    Sample.Utils.log("Hello World!")
+    log("Hello World!")
     host
   end
 
   def say_goodbye(host) do
-    Sample.Utils.log("Bye Bye")
+    log("Bye Bye")
     host
   end
 
@@ -38,6 +39,10 @@ defmodule Sample.HttpAgent do
 
   defp get_and_log_status(url) do
     {:ok, %HTTPoison.Response{status_code: status}} = HTTPoison.get(url)
-    Sample.Utils.log("HTTPRESPONSE - #{url} - #{status}")
+    log("HTTPRESPONSE - #{url} - #{status}")
   end
+
+  defp log(msg) do log(inspect(self()), msg) end
+  defp log(agent_id, msg) do Logger.info("Agent[#{agent_id}] - #{msg}") end
+
 end

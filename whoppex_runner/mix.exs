@@ -13,7 +13,7 @@ defmodule WhoppexRunner.Mixfile do
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
     [
-      applications: [:whoppex],
+      applications: [:whoppex, :httpoison],
       extra_applications: [:logger]
     ]
   end
@@ -21,7 +21,8 @@ defmodule WhoppexRunner.Mixfile do
   defp deps do
     [
       {:whoppex, "~> 0.1.0"},
-      {:distillery, "~> 1.4", runtime: false}
+      {:distillery, "~> 1.4", runtime: false},
+      {:httpoison, "~> 0.11.1"},
     ]
   end
 end
