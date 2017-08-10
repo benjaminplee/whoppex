@@ -16,9 +16,9 @@ defmodule Sample.PickTheIconAgent do
           :get_question_ajax,
           delay({10, :second})
         ], :rand.uniform(50)),
-        :score_ajax,
+        :post_score_ajax,
         :load_leaders,
-        :get_leaders_ajax
+        :get_scores_ajax
       ], {60, :second})
     ]
   end
@@ -38,9 +38,31 @@ defmodule Sample.PickTheIconAgent do
     host
   end
 
+  def get_question_ajax(host) do
+    get_and_log_status(host <> "../getRandIcons")
+    host
+  end
+
+  def get_scores_ajax(host) do
+    get_and_log_status(host <> "../getScores")
+    host
+  end
+
+  def post_score_ajax(host) do
+    name = "asdf"
+    score = 100
+    post_and_log_status(host <> "../saveScore?username=#{name}&score=#{score}")
+    host
+  end
+
   defp get_and_log_status(url) do
-    {:ok, %HTTPoison.Response{status_code: status}} = HTTPoison.get(url)
-    log("HTTPRESPONSE - #{url} - #{status}")
+    {:ok, %httpoison.response{status_code: status}} = httpoison.get(url)
+    log("GET - #{url} - #{status}")
+  end
+
+  defp post_and_log_status(url) do
+    {:ok, %httpoison.response{status_code: status}} = HTTPoison.post(url, "", [{"Content-Type", "application/json"}])
+    log("POST - #{url} - #{status}")
   end
 
   defp log(msg) do log(inspect(self()), msg) end
