@@ -3,65 +3,65 @@ defmodule Sample.PickTheIconAgent do
   require Logger
 
   def init(_) do
-    "https://swimming-in-elixir.firebaseapp.com/picktheicon/"
+    "https://swimming-in-elixir.firebaseapp.com/"
   end
 
   def create_plan(_host) do
     [
       :load_index,
-      repeat_for_period([
+      repeat([
         delay({5, :second}),
         :load_play,
         repeat([
           :get_question_ajax,
-          delay({10, :second})
+          delay({1, :second}, {5, :second})
         ], :rand.uniform(50)),
         :post_score_ajax,
         :load_leaders,
         :get_scores_ajax
-      ], {60, :second})
+      ], 2)
     ]
   end
 
   def load_index(host) do
-    get_and_log_status(host <> "/index.html")
+    get_and_log_status(host <> "picktheicon/index.html")
     host
   end
 
   def load_play(host) do
-    get_and_log_status(host <> "/play.html")
+    get_and_log_status(host <> "picktheicon/play.html")
     host
   end
 
   def load_leaders(host) do
-    get_and_log_status(host <> "/leaders.html")
+    get_and_log_status(host <> "picktheicon/leaders.html")
     host
   end
 
   def get_question_ajax(host) do
-    get_and_log_status(host <> "../getRandIcons")
+    get_and_log_status(host <> "getRandIcons")
     host
   end
 
   def get_scores_ajax(host) do
-    get_and_log_status(host <> "../getScores")
+    get_and_log_status(host <> "getScores")
     host
   end
 
   def post_score_ajax(host) do
-    name = "asdf"
-    score = 100
-    post_and_log_status(host <> "../saveScore?username=#{name}&score=#{score}")
+    name = "WHOPPEX_AGENT_" <> Sample.Utils.rnd_id()
+    score = 1
+    post_and_log_status(host <> "saveScore?username=#{name}&score=#{score}")
     host
   end
 
   defp get_and_log_status(url) do
-    {:ok, %httpoison.response{status_code: status}} = httpoison.get(url)
+    {:ok, %HTTPoison.Response{status_code: status}} = HTTPoison.get(url, [], [timeout: 10000, recv_timeout: 10000, follow_redirect: true])
     log("GET - #{url} - #{status}")
   end
 
   defp post_and_log_status(url) do
-    {:ok, %httpoison.response{status_code: status}} = HTTPoison.post(url, "", [{"Content-Type", "application/json"}])
+    {:ok, %HTTPoison.Response{status_code: status}} = HTTPoison.post(url, "", [{"Content-Type", "application/json"}], [timeout: 10000, recv_timeout: 10000, follow_redirect: true])
     log("POST - #{url} - #{status}")
   end
 

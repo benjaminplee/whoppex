@@ -2,7 +2,6 @@ defmodule Whoppex.Worker do
   require Logger
   use GenServer
 
-  #@spec start_link(agent_spec) :: GenServer.on_start
   def start_link(spec, delay_ms) do
     GenServer.start_link(__MODULE__, {spec, delay_ms}, [])
   end

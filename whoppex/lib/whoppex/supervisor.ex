@@ -12,6 +12,7 @@ defmodule Whoppex.Supervisor do
       supervisor(Whoppex.AgentSupervisor, [], restart: :permanent, shutdown: 5000),
       worker(Whoppex.Commander, [], restart: :permanent, shutdown: 5000)
     ]
+
     supervise(children, strategy: :one_for_one)
   end
 end

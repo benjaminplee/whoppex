@@ -9,7 +9,6 @@ defmodule Whoppex.AgentSupervisor do
     Supervisor.start_link(__MODULE__, :ok, name: @name)
   end
 
-  @spec launch(%Whoppex.Agent{}, non_neg_integer) :: Supervisor.on_start_child
   def launch(agent_spec, start_delay_ms) do
     Supervisor.start_child(@name, [agent_spec, start_delay_ms])
   end

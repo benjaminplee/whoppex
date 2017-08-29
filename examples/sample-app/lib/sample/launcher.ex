@@ -87,5 +87,6 @@ defmodule Sample.Launcher do
   defp map(:logging) do %Whoppex.Agent{module: Sample.LoggingAgent, state: 1..5} end
   defp map(:http) do %Whoppex.Agent{module: Sample.HttpAgent, state: "https://httpbin.org"} end
   defp map(:mqtt) do %Whoppex.Agent{module: Sample.MqttAgent, state: "localhost"} end
+  defp map(:pick) do %Whoppex.Agent{module: Sample.PickTheIconAgent, state: :ignored} end
 
 end

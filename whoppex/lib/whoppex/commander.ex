@@ -28,7 +28,7 @@ defmodule Whoppex.Commander do
   def launch_agents_over(n, spec, period \\ {30, :seconds}) do
     period_ms = enforce_min_time(enforce_ms(period), n)
     delay_ms = trunc(period_ms / n)
-  
+
     launch(n, spec, delay_ms)
     :ok
   end
@@ -44,7 +44,7 @@ defmodule Whoppex.Commander do
   def launch_mix_over(specs, period \\ {30, :seconds}) do
     period_ms = enforce_min_time(enforce_ms(period), 0)
     delay_ms = trunc(period_ms / length(specs))
-    
+
     launch(specs, delay_ms)
     :ok
   end
